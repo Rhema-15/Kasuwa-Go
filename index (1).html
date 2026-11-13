@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kasuwa Go – We shop the market for you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#1F1A17; --muted:#6B625C; --line:#EFEAE5;
+  --green:#E8590C; --green-ink:#FFFFFF; --gold:#2F8F4E; --gold-ink:#FFFFFF; --soft:#FFF4EC;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media not all{
+  :root:not([data-theme="light"]){
+    --bg:#1C130D; --surface:#271B13; --ink:#F7EBDD; --muted:#C4B2A0; --line:#3B2B1F;
+    --green:#FF8A4C; --green-ink:#1C130D; --gold:#5FC47F; --gold-ink:#10200F; --soft:#33241A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1C130D; --surface:#271B13; --ink:#F7EBDD; --muted:#C4B2A0; --line:#3B2B1F;
+  --green:#FF8A4C; --green-ink:#1C130D; --gold:#5FC47F; --gold-ink:#10200F; --soft:#33241A;
+  color-scheme: dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;line-height:1.08;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.logo i{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--green)}
+.nav-cta{color:var(--green);font-weight:700;text-decoration:none;border-bottom:2px solid var(--gold)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start;padding:28px 0 56px}
+.hero h1{font-size:clamp(38px,7vw,64px);font-weight:800;letter-spacing:-.02em}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:30em;margin:18px 0 22px}
+.badges{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.badges li{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:500}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+form label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+form input,form select,form textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px}
+form textarea{min-height:130px;resize:vertical}
+form input:focus,form select:focus,form textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{font:inherit;font-size:14px;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip:active{transform:scale(.97)}
+.btn{display:block;width:100%;margin-top:20px;font:inherit;font-weight:700;font-size:18px;background:var(--green);color:var(--green-ink);border:0;border-radius:12px;padding:15px;cursor:pointer}
+.small{font-size:14px;color:var(--muted);margin:10px 0 0}
+section{padding:48px 0}
+section h2{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.015em;margin-bottom:22px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0;margin:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.steps li::before{content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--gold-ink);font-weight:800;margin-bottom:10px}
+.steps b{display:block;font-size:17px;margin-bottom:4px}
+.steps span{color:var(--muted);font-size:15px}
+.promise{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:20px;padding:30px}
+.promise h2{margin-bottom:14px}
+.promise ul{margin:0;padding-left:20px}
+.promise li{margin:8px 0;font-size:18px}
+footer{padding:36px 0 48px;color:var(--muted);font-size:14px}
+#result{display:none;margin-top:16px;background:var(--soft);border:1.5px dashed var(--green);border-radius:12px;padding:14px;white-space:pre-wrap;font-size:15px}
+#result button{margin-top:10px}
+.wa{display:none}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:480px){
+  .steps{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><i></i>Kasuwa Go</div>
+    <a class="nav-cta" href="#order">Place an order</a>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Skip the market. Dinner’s still sorted.</h1>
+        <p class="lead">Send us your shopping list. We buy fresh from the market, send you a photo, and bring it to your door in Barnawa, Sabo, Maraban Rido, Kamazou, Janruwa, Narayi, Karji and Maigero, Kaduna.</p>
+        <ul class="badges">
+          <li>Fresh from the market</li>
+          <li>You approve the price first</li>
+          <li>Delivered to your door</li>
+        </ul>
+      </div>
+
+      <div class="card" id="order">
+        <h2 style="font-size:26px;margin-bottom:4px">Send your list</h2>
+        <p class="small" style="margin-top:0">Takes about a minute. We’ll confirm the total before we buy anything.</p>
+        <form id="f" novalidate>
+          <label for="name">Your name</label>
+          <input id="name" autocomplete="name" placeholder="e.g. Mrs. Bala">
+
+          <label for="area">Where should we deliver?</label>
+          <select id="area">
+            <option>Barnawa</option>
+            <option>Sabo</option>
+            <option>Maraban Rido</option>
+            <option>Kamazou</option>
+            <option>Janruwa</option>
+            <option>Narayi</option>
+            <option>Karji</option>
+            <option>Maigero</option>
+            <option>Another area (we’ll tell you if we can reach)</option>
+          </select>
+          <input id="addr" style="margin-top:8px" autocomplete="street-address" placeholder="Street, house number or landmark">
+
+          <label for="list">Your shopping list</label>
+          <textarea id="list" placeholder="e.g. 2 baskets tomatoes, 1 kg pepper, 3 bunches ugu"></textarea>
+          <div class="chips" id="chips" aria-label="Quick add">
+            <button type="button" class="chip">Tomatoes</button>
+            <button type="button" class="chip">Pepper</button>
+            <button type="button" class="chip">Onions</button>
+            <button type="button" class="chip">Rice</button>
+            <button type="button" class="chip">Vegetable oil</button>
+            <button type="button" class="chip">Yam</button>
+            <button type="button" class="chip">Eggs</button>
+            <button type="button" class="chip">Fresh fish</button>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="when">Delivery time</label>
+              <select id="when">
+                <option>Morning delivery</option>
+                <option>Afternoon delivery</option>
+                <option>Evening, after work</option>
+              </select>
+            </div>
+            <div>
+              <label for="budget">Budget (optional)</label>
+              <input id="budget" inputmode="numeric" placeholder="₦ e.g. 15000">
+            </div>
+          </div>
+
+          <button class="btn" type="submit">Send my list on WhatsApp</button>
+          <p class="small">No payment now. We’ll message you the price first.</p>
+        </form>
+        <div id="result" role="status"></div>
+      </div>
+    </div>
+
+    <section aria-labelledby="how">
+      <h2 id="how">How it works</h2>
+      <ol class="steps">
+        <li><b>Send your list</b><span>Tell us what you need and when.</span></li>
+        <li><b>We price it</b><span>We check market prices and send you the total.</span></li>
+        <li><b>You approve and pay</b><span>Item cost plus a small delivery fee.</span></li>
+        <li><b>We buy and deliver</b><span>You get a photo of your items, then your door.</span></li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="promise">
+        <h2>Our promise to busy parents</h2>
+        <ul>
+          <li>You see the price before we spend your money.</li>
+          <li>You get a photo of what we bought.</li>
+          <li>Something wrong? Tell us and we’ll fix it.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>Kasuwa Go · Serving Barnawa, Sabo, Maraban Rido, Kamazou, Janruwa, Narayi, Karji and Maigero in Kaduna. More areas soon.</footer>
+</div>
+
+<script>
+// Change this to your real WhatsApp number in international format, no plus sign.
+// Example: 2348012345678
+var WHATSAPP = "2348067143894";
+
+var list = document.getElementById('list');
+document.getElementById('chips').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  var v = list.value.trim();
+  list.value = (v ? v + "\n" : "") + "• " + b.textContent + " – ";
+  list.focus();
+});
+
+document.getElementById('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('name').value.trim();
+  var list_ = list.value.trim();
+  var addr = document.getElementById('addr').value.trim();
+  if(!name || !list_ || !addr){
+    alert('Please add your name, address and shopping list.');
+    return;
+  }
+  var area = document.getElementById('area').value;
+  var when = document.getElementById('when').value;
+  var budget = document.getElementById('budget').value.trim();
+  var msg = "New order – Kasuwa Go\n" +
+    "Name: " + name + "\n" +
+    "Area: " + area + "\n" +
+    "Address: " + addr + "\n" +
+    "Delivery: " + when + "\n" +
+    (budget ? "Budget: ₦" + budget + "\n" : "") +
+    "\nList:\n" + list_;
+
+  if(WHATSAPP){
+    window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+    return;
+  }
+  var r = document.getElementById('result');
+  r.style.display = 'block';
+  r.textContent = "Demo mode: this is the message that will arrive on your WhatsApp once the number is added.\n\n" + msg;
+  r.scrollIntoView({behavior:'smooth', block:'nearest'});
+});
+</script>
+</body>
+</html>
